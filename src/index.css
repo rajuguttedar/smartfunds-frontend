@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+@import "tailwindcss";
+
+/* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --grid-cols-auto: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+::-webkit-scrollbar {
+  @apply hidden;
+}
+
+@layer utilities {
+  .grid-cols-auto {
+    grid-template-columns: var(--grid-cols-auto);
+  }
+  .font-suse-mono {
+    font-family: "SUSE Mono", monospace;
+  }
+}
+
+/* Hide number input spinners in Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide number input spinners in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Hide calendar icon but keep input clickable */
+/* input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+}
+input[type="date"]::-moz-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+} */
+
+/* Hide date picker icons completely but keep input clickable for Internet Explorer */
+/* input[type="date"]::-ms-expand {
+  display: none;
+} */
+
+/* Custom styles for add customer record date picker */
+
+/* .customer-record-date-picker::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  display: none;
+  pointer-events: none;
+} */
