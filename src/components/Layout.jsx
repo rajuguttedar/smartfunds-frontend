@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./SideBar";
 import TopNav from "./TopNav";
 import { useAuth } from "../context/AuthContext";
+import Sidebar from './Sidebar';
 
 export default function Layout() {
   const [dark, setDark] = useState(false);
