@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import api from "../api/axios";
 
 export default function AddCustomer({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -44,8 +44,8 @@ export default function AddCustomer({ onSubmit }) {
     }
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/customers",
+      const res = await api.post(
+        "/customers",
         formData,
         {
           headers: {

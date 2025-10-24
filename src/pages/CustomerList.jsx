@@ -61,7 +61,7 @@ export default function CustomerList() {
       const pendingMap = res.data?.pendingPerCustomer || {};
       setPendingData(pendingMap);
     } catch (err) {
-      toast.error("Failed to fetch pending amounts");
+      toast.error("Failed to fetch pending amounts", err.message || "");
     }
   }, []);
 
