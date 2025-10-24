@@ -28,7 +28,7 @@ export default function Layout() {
       <div className="flex flex-1 min-h-0 w-full overflow-hidden">
         {/* Desktop Sidebar */}
         <div className="hidden sm:block h-full">
-          <Sidebar dark={dark} setDark={setDark} />
+          <SideNavBar dark={dark} setDark={setDark} />
         </div>
 
         {/* Mobile Sidebar Overlay */}
