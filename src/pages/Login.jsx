@@ -37,7 +37,7 @@ const submit = async (e) => {
       if (password.length < 6) {
         // if (!passwordRegex.test(password)) {
         toast.error(
-          "Password must have at least 1 uppercase and 1 lowercase letter before '@', and only numbers after '@'. Example: Abc@1234"
+          "Password must have at least 1 uppercase and 1 lowercase before '@', and only numbers after '@'. Example: Abc@1234"
         );
         return;
       }

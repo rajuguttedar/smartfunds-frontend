@@ -355,14 +355,12 @@ export default function CustomerList() {
                     </td>
                     <td
                       className={`px-3 py-2 whitespace-nowrap font-semibold ${
-                        pendingData[cust._id] > 0
+                        (pendingData[cust._id] ?? 0) > 0
                           ? "text-red-600 dark:text-red-400"
                           : "text-gray-700 dark:text-gray-200"
                       }`}
                     >
-                      {pendingData[cust._id] > 0 || pendingData[cust._id] === 0
-                        ? pendingData[cust._id]
-                        : cust.totalAmountGiven}
+                      {pendingData[cust._id] ?? 0}
                     </td>
 
                     {user.role === "admin" && (

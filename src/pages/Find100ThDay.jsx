@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 function Find100ThDay() {
-  const [days, setDays] = useState(36);
+  const [days, setDays] = useState(100);
   const [date, setDate] = useState("");
   const [resultDate, setResultDate] = useState("");
 
@@ -9,7 +10,7 @@ function Find100ThDay() {
     e.preventDefault();
 
     if (!date) {
-      alert("Please select a date first!");
+      toast.error("Please select a date first!");
       return;
     }
 
@@ -33,6 +34,8 @@ function Find100ThDay() {
 
   return (
     <div className="w-full max-w-xl mx-auto p-6 font-suse-mono text-md">
+      <Toaster position="top-right" />
+
       <div className="bg-white dark:bg-gray-800 shadow-lg border border-red-400 rounded-xl px-6 py-10">
         <form
           className="space-y-4 w-full max-w-md mx-auto p-6 border border-gray-400 rounded-xl"
@@ -57,7 +60,7 @@ function Find100ThDay() {
               onChange={(e) => setDays(e.target.value)}
               max={99999999}
               step="any"
-              className="border border-gray-300 rounded-2xl p-3 w-full focus:outline-none"
+              className="text-gray-950 dark:text-white border border-gray-300 rounded-2xl p-3 w-full focus:outline-none"
             />
           </div>
 
@@ -78,7 +81,7 @@ function Find100ThDay() {
               name="ic_date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="border border-gray-300 rounded-2xl p-3 w-full focus:outline-none"
+              className="text-gray-950 dark:text-white border border-gray-300 rounded-2xl p-3 w-full focus:outline-none"
             />
           </div>
 
@@ -97,9 +100,7 @@ function Find100ThDay() {
             Date:
           </p>
           <p className="text-center font-semibold py-2 font-suse-mono text-xl">
-            {resultDate
-              ? resultDate
-              : "Select a date and click Calculate"}
+            {resultDate ? resultDate : "Select a date and click Calculate"}
           </p>
         </div>
       </div>

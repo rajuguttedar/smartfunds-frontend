@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 function AgeCalculator() {
   const [birthDate, setBirthDate] = useState("");
@@ -9,7 +10,7 @@ function AgeCalculator() {
     e.preventDefault();
 
     if (!birthDate) {
-      alert("Please select your birth date!");
+      toast.error("Please select your birth date!");
       return;
     }
 
@@ -39,6 +40,7 @@ function AgeCalculator() {
 
   return (
     <div className="w-full max-w-xl mx-auto p-6 font-suse-mono text-md">
+      <Toaster position="top-right" />
       <div className="bg-white dark:bg-gray-800 shadow-lg border border-red-400 rounded-xl px-6 py-10">
         <form
           onSubmit={handleSubmit}

@@ -1,8 +1,10 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import api from "../api/axios";
 
-export default function AddCustomer({ onSubmit }) {
+export default function AddCustomer({ onSubmit, existingCustomer }) {
+  const isUpdate = !!existingCustomer;
   const [formData, setFormData] = useState({
     accountNo: "",
     name: "",
@@ -14,6 +16,26 @@ export default function AddCustomer({ onSubmit }) {
     totalAmountGiven: "",
   });
   const [loading, setLoading] = useState(false);
+
+  // ✅ Pre-fill form if editing
+  useEffect(() => {
+    if (existingCustomer) {
+      setFormData({
+        accountNo: existingCustomer.accountNo || "",
+        name: existingCustomer.name || "",
+        mobile: existingCustomer.mobile || "",
+        startDate: existingCustomer.startDate
+          ? new Date(existingCustomer.startDate).toISOString().split("T")[0]
+          : "",
+        endDate: existingCustomer.endDate
+          ? new Date(existingCustomer.endDate).toISOString().split("T")[0]
+          : "",
+        totalDays: existingCustomer.totalDays || "",
+        dailyCollection: existingCustomer.dailyCollection || "",
+        totalAmountGiven: existingCustomer.totalAmountGiven || "",
+      });
+    }
+  }, [existingCustomer]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,53 +53,64 @@ export default function AddCustomer({ onSubmit }) {
       return;
     }
 
-    const accountNoRegex = /^\d+\/\d{2}$/;
-    if (!formData.accountNo.trim()) {
-      toast.error("Account number is required");
-      setLoading(false);
-      return;
-    }
-    if (!accountNoRegex.test(formData.accountNo)) {
-      toast.error("Account number must be in format e.g., 100/25");
-      setLoading(false);
-      return;
-    }
-
     try {
-      const res = await api.post(
-        "/customers",
-        formData,
-        {
+      let res;
+      if (isUpdate) {
+        // ✅ UPDATE EXISTING CUSTOMER
+        res = await api.put(`/customers/${existingCustomer._id}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
+        });
+        toast.success("Customer updated successfully!");
+      } else {
+        // ✅ ADD NEW CUSTOMER
+        const accountNoRegex = /^\d+\/\d{2}$/;
+        if (!formData.accountNo.trim()) {
+          toast.error("Account number is required");
+          setLoading(false);
+          return;
         }
-      );
+        if (!accountNoRegex.test(formData.accountNo)) {
+          toast.error("Account number must be in format e.g., 100/25");
+          setLoading(false);
+          return;
+        }
 
-      const newCustomer = res.data?.data || res.data;
-      toast.success("Customer added successfully!");
+        res = await api.post("/customers", formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        toast.success("Customer added successfully!");
+      }
 
-      // Notify parent to update state and close modal
-      if (onSubmit) onSubmit(newCustomer);
+      const updatedCustomer = res.data?.data || res.data;
+      if (onSubmit) onSubmit(updatedCustomer);
 
-      // Reset form
-      setFormData({
-        accountNo: "",
-        name: "",
-        mobile: "",
-        startDate: "",
-        endDate: "",
-        totalDays: "",
-        dailyCollection: "",
-        totalAmountGiven: "",
-      });
+      // Reset if adding new
+      if (!isUpdate) {
+        setFormData({
+          accountNo: "",
+          name: "",
+          mobile: "",
+          startDate: "",
+          endDate: "",
+          totalDays: "",
+          dailyCollection: "",
+          totalAmountGiven: "",
+        });
+      }
     } catch (err) {
       if (err.response?.data?.message?.includes("E11000 duplicate key")) {
         toast.error("Customer with same account number cannot be added");
       } else {
         toast.error(
-          err.response?.data?.message || err.message || "Failed to add customer"
+          err.response?.data?.message ||
+            err.message ||
+            "Failed to save customer"
         );
       }
     } finally {
@@ -102,6 +135,7 @@ export default function AddCustomer({ onSubmit }) {
               value={formData.accountNo}
               onChange={handleChange}
               required
+              disabled={isUpdate}
               className="p-2 border rounded w-full dark:bg-gray-700 dark:text-gray-100"
             />
           </div>
@@ -201,7 +235,11 @@ export default function AddCustomer({ onSubmit }) {
           disabled={loading}
           className="w-full py-2 bg-green-600/90 hover:bg-green-700 text-white rounded-md font-semibold transition"
         >
-          {loading ? "Saving..." : "Add Customer"}
+          {loading
+            ? "Saving..."
+            : isUpdate
+            ? "Update Customer"
+            : "Add Customer"}
         </button>
       </form>
     </div>

@@ -371,3 +371,5 @@ Raju Guttedar
 Frontend Developer | MERN Stack
 
 # 🛠 Tech Focus: React.js, Tailwind CSS, Express.js, MongoDB
+
+see this customer recordList.jsx in this for edit it opens in input but in this component i dispalyed some fields only other fields but if i did mistake to enter total given amount that time there is no edit options 

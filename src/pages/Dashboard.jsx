@@ -48,10 +48,14 @@ export default function Dashboard() {
           <h3>Pending Till Today</h3>
           <p>{data.totalPending}</p>
         </div>
-        <div className=" p-4 rounded-lg bg-yellow-100 dark:bg-yellow-900 xl:leading-20 text-lg xl:text-2xl text-yellow-800 dark:text-yellow-200 flex flex-col justify-center items-center h-[100px] lg:h-[250px] ">
-          <h3>Total Balance</h3>
-          <p>{data.totalBalance}</p>
-        </div>
+
+        {/* Total Balance (for admin only) */}
+        {user.role === "admin" && (
+          <div className=" p-4 rounded-lg bg-yellow-100 dark:bg-yellow-900 xl:leading-20 text-lg xl:text-2xl text-yellow-800 dark:text-yellow-200 flex flex-col justify-center items-center h-[100px] lg:h-[250px] ">
+            <h3>Total Balance</h3>
+            <p>{data.totalBalance}</p>
+          </div>
+        )}
         {/* Completed Accounts (for admin only) */}
         {user.role === "admin" && (
           <div className=" p-4 rounded-lg bg-blue-100 dark:bg-blue-900 xl:leading-20 text-lg xl:text-2xl text-blue-800 dark:text-blue-200 flex flex-col justify-center items-center h-[100px] lg:h-[250px] ">
