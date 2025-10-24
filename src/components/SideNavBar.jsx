@@ -16,7 +16,7 @@ import clsx from "clsx";
 import { useAuth } from "../context/AuthContext";
 
 
-export default function Sidebar({ dark, setDark, onNavigate }) {
+export default function SideNavBar({ dark, setDark, onNavigate }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 

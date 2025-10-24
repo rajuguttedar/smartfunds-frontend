@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import TopNav from "./TopNav";
 import { useAuth } from "../context/AuthContext";
-import Sidebar from './Sidebar';
+import SideNavBar from "./SideNavBar";
 
 export default function Layout() {
   const [dark, setDark] = useState(false);
@@ -35,7 +35,7 @@ export default function Layout() {
         {sidebarOpen && (
           <div className="fixed inset-0 z-50 flex bg-black/20">
             <div className="w-64 min-h-screen bg-gray-100 dark:bg-gray-900 shadow-2xl">
-              <Sidebar
+              <SideNavBar
                 dark={dark}
                 setDark={setDark}
                 onNavigate={() => setSidebarOpen(false)}
