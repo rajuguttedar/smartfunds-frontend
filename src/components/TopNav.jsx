@@ -1,5 +1,6 @@
 import { FaBars } from "react-icons/fa";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 export default function TopNav({ onMenuClick, showHamburger }) {
   return (
@@ -9,9 +10,11 @@ export default function TopNav({ onMenuClick, showHamburger }) {
       )}
     >
       <div className="flex items-center gap-2">
-        <span className="text-lg font-bold text-gray-800 dark:text-white">
-          YMG SmartFunds
-        </span>
+        <Link to="/dashboard">
+          <span className="text-lg font-bold text-gray-800 dark:text-white">
+            YMG SmartFunds
+          </span>
+        </Link>
       </div>
       <div className="flex items-center gap-2">
         {showHamburger && (

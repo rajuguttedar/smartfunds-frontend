@@ -48,9 +48,12 @@ export default function Layout() {
         {/* Main Content */}
         <main className="flex-1 flex flex-col min-h-0 bg-gray-50 dark:bg-gray-800 overflow-hidden">
           {/* Desktop Header */}
-          <div className="hidden sm:block p-6 border-b mx-auto border-gray-200 dark:border-gray-700">
-            <span className="text-2xl  font-bold font-suse-mono text-gray-800 dark:text-white">
-              Welcome to YMG SmartFunds - {user?.name || "User"}
+          <div className="flex flex-col md:flex-row p-6 border-b mx-auto border-gray-200 dark:border-gray-700 space-y-4">
+            <span className="md:text-2xl font-bold font-suse-mono text-gray-800 dark:text-white">
+              Welcome to YMG SmartFunds -
+            </span>
+            <span className="text-center md:text-left md:text-2xl  font-bold font-suse-mono text-gray-800 dark:text-white">
+              {user?.name || "User"}
             </span>
           </div>
 

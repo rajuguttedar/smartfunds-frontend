@@ -25,6 +25,9 @@ const Chart = ({ chartData }) => {
             cy="50%"
             innerRadius={36}
             outerRadius={60}
+            startAngle={90}
+            endAngle={-270} // makes it a full circle starting at top
+            stroke="none"
             label
           >
             {memoizedData.map((entry, index) => (
