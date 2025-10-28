@@ -25,7 +25,7 @@ export default function Layout() {
         />
       </div>
 
-      <div className="flex flex-1 min-h-0 w-full overflow-hidden">
+      <div className="flex flex-1 h-auto md:h-screen w-full overflow-hidden">
         {/* Desktop Sidebar */}
         <div className="hidden sm:block h-full">
           <SideNavBar dark={dark} setDark={setDark} />
@@ -46,7 +46,7 @@ export default function Layout() {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col min-h-0 bg-gray-50 dark:bg-gray-800 overflow-hidden">
+        <main className="flex-1 flex flex-col h-auto md:h-screen bg-gray-50 dark:bg-gray-800 overflow-hidden">
           {/* Desktop Header */}
           <div className="flex flex-col md:flex-row p-6 border-b mx-auto border-gray-200 dark:border-gray-700 space-y-4">
             <span className="md:text-2xl font-bold font-suse-mono text-gray-800 dark:text-white">
