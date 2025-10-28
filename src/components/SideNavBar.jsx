@@ -78,7 +78,7 @@ export default function SideNavBar({ dark, setDark, onNavigate }) {
     // Use min-h-screen so sidebar spans the viewport; keep w-64 fixed width
     <div
       className={clsx(
-        "min-h-screen w-64  p-4 bg-gray-100 dark:bg-gray-900 flex flex-col justify-between",
+        "h-auto md:h-screen w-64  p-4 bg-gray-100 dark:bg-gray-900 flex flex-col justify-between",
         dark ? "dark" : ""
       )}
     >
