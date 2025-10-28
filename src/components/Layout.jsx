@@ -16,7 +16,7 @@ export default function Layout() {
   }, [dark]);
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden">
+    <div className="flex flex-col h-[100dvh] sm:h-screen w-screen overflow-hidden">
       {/* Mobile TopNav */}
       <div className="sm:hidden w-full sticky top-0 z-50">
         <TopNav

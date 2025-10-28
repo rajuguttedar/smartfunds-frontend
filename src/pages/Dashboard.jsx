@@ -39,7 +39,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 w-full flex flex-col h-full">
-      <div className="grid grid-cols-auto gap-4 font-suse-mono">
+      <div className="grid grid-cols-auto gap-4 font-suse-mono pb-10">
         <div className=" p-4 rounded-lg bg-green-100 dark:bg-green-900 xl:leading-20 text-lg xl:text-2xl text-green-800 dark:text-green-200 flex flex-col justify-center items-center h-[100px] lg:h-[250px] ">
           <h3>Today Collection</h3>
           <p>{data.todayCollection}</p>
