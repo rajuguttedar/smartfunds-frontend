@@ -16,7 +16,7 @@ export default function Layout() {
   }, [dark]);
 
   return (
-    <div className="flex flex-col h-[100dvh] sm:h-screen w-screen overflow-hidden">
+    <div className="flex flex-col h-[100svh] sm:h-screen w-screen overflow-hidden">
       {/* Mobile TopNav */}
       <div className="sm:hidden w-full sticky top-0 z-50">
         <TopNav
@@ -25,7 +25,7 @@ export default function Layout() {
         />
       </div>
 
-      <div className="flex flex-1 min-h-0 w-full overflow-hidden">
+      <div className="flex flex-1 min-h-0 w-full overflow-hidden h-full">
         {/* Desktop Sidebar */}
         <div className="hidden sm:block h-full">
           <SideNavBar dark={dark} setDark={setDark} />
