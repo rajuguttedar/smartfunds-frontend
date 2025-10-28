@@ -16,7 +16,7 @@ export default function Layout() {
   }, [dark]);
 
   return (
-    <div className="flex flex-col min-h-[100dvh] h-auto w-screen overflow-hidden">
+    <div className="flex flex-col h-screen w-screen overflow-hidden">
       {/* Mobile TopNav */}
       <div className="sm:hidden w-full sticky top-0 z-50">
         <TopNav
@@ -25,7 +25,7 @@ export default function Layout() {
         />
       </div>
 
-      <div className="flex flex-1 w-full min-h-0 h-full overflow-hidden items-stretch">
+      <div className="flex flex-1 min-h-0 w-full overflow-hidden">
         {/* Desktop Sidebar */}
         <div className="hidden sm:block h-full">
           <SideNavBar dark={dark} setDark={setDark} />
@@ -46,7 +46,7 @@ export default function Layout() {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col min-h-0 h-full bg-gray-50 dark:bg-gray-800 overflow-hidden">
+        <main className="flex-1 flex flex-col min-h-0 bg-gray-50 dark:bg-gray-800 overflow-hidden">
           {/* Desktop Header */}
           <div className="flex flex-col md:flex-row p-6 border-b mx-auto border-gray-200 dark:border-gray-700 space-y-4">
             <span className="md:text-2xl font-bold font-suse-mono text-gray-800 dark:text-white">
