@@ -24,7 +24,7 @@ export default function CustomerList() {
   const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const customersPerPage = 50;
+  const customersPerPage = 10;
 
   const fetchCustomers = useCallback(async () => {
     setLoading(true);
