@@ -125,6 +125,17 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
 
           {/* Number buttons */}
           <div className="flex justify-center gap-1 overflow-x-auto">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => p - 1)}
+              className={`px-3 py-2 rounded ${
+                currentPage === 1
+                  ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
+                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
+              }`}
+            >
+              ‹
+            </button>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <button
                 key={page}
@@ -138,6 +149,17 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
                 {page}
               </button>
             ))}
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => p + 1)}
+              className={`px-3 py-2 rounded ${
+                currentPage === totalPages
+                  ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
+                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
+              }`}
+            >
+              ›
+            </button>
           </div>
         </div>
       )}
