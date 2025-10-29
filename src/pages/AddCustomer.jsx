@@ -135,7 +135,6 @@ export default function AddCustomer({ onSubmit, existingCustomer }) {
               value={formData.accountNo}
               onChange={handleChange}
               required
-              disabled={isUpdate}
               className="p-2 border rounded w-full dark:bg-gray-700 dark:text-gray-100"
             />
           </div>

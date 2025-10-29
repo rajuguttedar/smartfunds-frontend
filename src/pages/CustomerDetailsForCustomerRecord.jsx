@@ -12,8 +12,8 @@ export default function CustomerDetailsForCustomerRecord({ customer }) {
 
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-6 font-suse-mono text-md">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
+    <div className="w-full max-w-6xl mx-auto md:p-6 font-suse-mono text-md">
+      <div className=" dark:bg-gray-800  rounded-lg md:p-6">
         <div className="grid grid-cols-auto gap-4">
           {/* Account No */}
           <div className="flex items-center">

@@ -19,7 +19,7 @@ function Find100ThDay() {
 
     // Add days
     const newDate = new Date(startDate);
-    newDate.setDate(startDate.getDate() + Number(days));
+    newDate.setDate(startDate.getDate() + Number(days) - 1);
 
     // Format the result
     const formattedDate = newDate.toLocaleDateString("en-US", {
