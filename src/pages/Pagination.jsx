@@ -10,39 +10,51 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
     else if (diff < -50 && currentPage > 1) setCurrentPage((p) => p - 1);
   };
 
-  const renderPageButtons = () => {
-    return Array.from({ length: totalPages }, (_, i) => i + 1)
-      .filter(
-        (page) =>
-          page === 1 ||
-          page === totalPages ||
-          (page >= currentPage - 2 && page <= currentPage + 2)
-      )
-      .map((page, idx, arr) => {
-        const prevPage = arr[idx - 1];
-        if (prevPage && page - prevPage > 1)
-          return (
-            <span
-              key={`dots-${page}`}
-              className="px-2 py-1 text-gray-500 select-none"
-            >
-              ...
-            </span>
-          );
+  // ✅ Static pagination logic (no shifting)
+  const renderStaticButtons = () => {
+    const pages = [];
+
+    // Always show first 3 pages
+    for (let i = 1; i <= Math.min(3, totalPages); i++) {
+      pages.push(i);
+    }
+
+    // Add ellipsis if total pages > 5
+    if (totalPages > 5) {
+      pages.push("...");
+      pages.push(totalPages);
+    } else if (totalPages > 3) {
+      for (let i = 4; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    }
+
+    return pages.map((page, index) => {
+      if (page === "...") {
         return (
-          <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            className={`px-3 py-1 text-sm rounded ${
-              currentPage === page
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
-            }`}
+          <span
+            key={`dots-${index}`}
+            className="px-2 py-1 text-gray-500 select-none"
           >
-            {page}
-          </button>
+            ...
+          </span>
         );
-      });
+      }
+
+      return (
+        <button
+          key={page}
+          onClick={() => setCurrentPage(page)}
+          className={`px-3 py-1 text-sm rounded ${
+            currentPage === page
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
+          }`}
+        >
+          {page}
+        </button>
+      );
+    });
   };
 
   return (
@@ -62,7 +74,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             ‹
           </button>
 
-          <div className="flex gap-1">{renderPageButtons()}</div>
+          <div className="flex gap-1">{renderStaticButtons()}</div>
 
           <button
             disabled={currentPage === totalPages}
@@ -139,7 +151,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
               ‹
             </button>
 
-            {renderPageButtons()}
+            {renderStaticButtons()}
 
             <button
               disabled={currentPage === totalPages}
