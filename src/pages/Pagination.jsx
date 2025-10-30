@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -15,13 +14,8 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
     const pages = [];
     const visibleRange = 1; // one page before and after current page
 
-    // Always include first page
     pages.push(1);
-
-    // Left dots
     if (currentPage - visibleRange > 2) pages.push("left-dots");
-
-    // Middle pages
     for (
       let i = Math.max(2, currentPage - visibleRange);
       i <= Math.min(totalPages - 1, currentPage + visibleRange);
@@ -29,11 +23,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
     ) {
       pages.push(i);
     }
-
-    // Right dots
     if (currentPage + visibleRange < totalPages - 1) pages.push("right-dots");
-
-    // Always include last page
     if (totalPages > 1) pages.push(totalPages);
 
     return pages.map((page, idx) => {
@@ -97,10 +87,10 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
         </div>
       )}
 
-      {/* Mobile Pagination (now exactly same logic as desktop) */}
+      {/* Mobile Pagination */}
       {totalPages > 1 && (
         <div
-          className="md:hidden sticky bottom-0 bg-white z-10 flex flex-col gap-2 px-2 py-2 select-none"
+          className="md:hidden sticky bottom-0 bg-white z-10 flex flex-col gap-1 px-1 py-1 select-none"
           onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
           onTouchEnd={handleSwipe}
         >
@@ -109,7 +99,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => p - 1)}
-              className={`px-3 py-2 rounded ${
+              className={`px-2 py-1 text-xs rounded ${
                 currentPage === 1
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
                   : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
@@ -125,7 +115,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.3 }}
-                className="text-sm font-medium dark:bg-gray-100 dark:text-gray-900"
+                className="text-xs font-medium dark:bg-gray-100 dark:text-gray-900"
               >
                 Page {currentPage} / {totalPages}
               </motion.span>
@@ -134,7 +124,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => p + 1)}
-              className={`px-3 py-2 rounded ${
+              className={`px-2 py-1 text-xs rounded ${
                 currentPage === totalPages
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
                   : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
@@ -144,12 +134,12 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             </button>
           </div>
 
-          {/* Number buttons with same logic and arrows */}
+          {/* Number buttons smaller size */}
           <div className="flex justify-center gap-1 items-center overflow-x-auto">
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => p - 1)}
-              className={`px-3 py-1 text-sm rounded ${
+              className={`px-2 py-1 text-xs rounded ${
                 currentPage === 1
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
                   : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
@@ -163,7 +153,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => p + 1)}
-              className={`px-3 py-1 text-sm rounded ${
+              className={`px-2 py-1 text-xs rounded ${
                 currentPage === totalPages
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
                   : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
