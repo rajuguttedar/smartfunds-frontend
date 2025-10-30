@@ -10,61 +10,30 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
     else if (diff < -50 && currentPage > 1) setCurrentPage((p) => p - 1);
   };
 
-  // ✅ Smart windowed pagination (shows only 4 page numbers)
-  const renderPageButtons = () => {
+  // helper to calculate visible pages (max 4)
+  const getVisiblePages = () => {
     const pages = [];
-    const maxVisible = 4;
+    const start = Math.max(1, currentPage - 1);
+    const end = Math.min(totalPages, currentPage + 1);
 
-    let start = Math.max(1, currentPage - 1);
-    let end = start + maxVisible - 1;
-
-    if (end > totalPages) {
-      end = totalPages;
-      start = Math.max(1, end - maxVisible + 1);
-    }
-
-    // Always include first and last if far apart
-    if (start > 1) pages.push(1);
-    if (start > 2) pages.push("...");
-
+    // always ensure 4 visible
     for (let i = start; i <= end; i++) pages.push(i);
+    while (pages.length < 4 && pages[0] > 1) pages.unshift(pages[0] - 1);
+    while (pages.length < 4 && pages[pages.length - 1] < totalPages)
+      pages.push(pages[pages.length - 1] + 1);
 
-    if (end < totalPages - 1) pages.push("...");
-    if (end < totalPages) pages.push(totalPages);
-
-    return pages.map((page, index) => {
-      if (page === "...") {
-        return (
-          <span
-            key={`dots-${index}`}
-            className="px-2 py-1 text-gray-500 select-none"
-          >
-            ...
-          </span>
-        );
-      }
-
-      return (
-        <button
-          key={page}
-          onClick={() => setCurrentPage(page)}
-          className={`px-3 py-1 text-sm rounded ${
-            currentPage === page
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
-          }`}
-        >
-          {page}
-        </button>
-      );
-    });
+    // ensure no duplicates beyond totalPages range
+    return [...new Set(pages)].filter((p) => p >= 1 && p <= totalPages);
   };
+
+  const visiblePages = getVisiblePages();
 
   return (
     <>
       {/* Desktop Pagination */}
       {totalPages > 1 && (
         <div className="hidden md:flex justify-center items-center gap-2 mt-6">
+          {/* Prev */}
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
@@ -77,8 +46,43 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             ‹
           </button>
 
-          <div className="flex gap-1">{renderPageButtons()}</div>
+          {/* Pages */}
+          <div className="flex gap-1">
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .filter(
+                (page) =>
+                  page === 1 ||
+                  page === totalPages ||
+                  (page >= currentPage - 2 && page <= currentPage + 2)
+              )
+              .map((page, idx, arr) => {
+                const prev = arr[idx - 1];
+                if (prev && page - prev > 1)
+                  return (
+                    <span
+                      key={`dots-${page}`}
+                      className="px-2 py-1 text-gray-500 select-none"
+                    >
+                      ...
+                    </span>
+                  );
+                return (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-3 py-1 text-sm rounded ${
+                      currentPage === page
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                );
+              })}
+          </div>
 
+          {/* Next */}
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => p + 1)}
@@ -100,7 +104,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
           onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
           onTouchEnd={handleSwipe}
         >
-          {/* Arrows + Current Page */}
+          {/* Top row: arrows + label */}
           <div className="flex justify-between items-center">
             <button
               disabled={currentPage === 1}
@@ -108,7 +112,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
               className={`px-3 py-2 rounded ${
                 currentPage === 1
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
-                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
+                  : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
               }`}
             >
               ‹
@@ -133,40 +137,60 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
               className={`px-3 py-2 rounded ${
                 currentPage === totalPages
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
-                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
+                  : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
               }`}
             >
               ›
             </button>
           </div>
 
-          {/* Number Buttons with Arrows */}
-          <div className="flex justify-center gap-1 overflow-x-auto">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((p) => p - 1)}
-              className={`px-3 py-2 rounded ${
-                currentPage === 1
-                  ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
-                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
-              }`}
-            >
-              ‹
-            </button>
+          {/* Bottom row: page buttons (limited to 4) */}
+          <div className="flex justify-center items-center gap-1">
+            {visiblePages[0] > 1 && (
+              <>
+                <button
+                  onClick={() => setCurrentPage(1)}
+                  className={`px-3 py-1 text-sm rounded ${
+                    currentPage === 1
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
+                  }`}
+                >
+                  1
+                </button>
+                <span className="px-2 text-gray-500">...</span>
+              </>
+            )}
 
-            {renderPageButtons()}
+            {visiblePages.map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`px-3 py-1 text-sm rounded ${
+                  currentPage === page
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
 
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((p) => p + 1)}
-              className={`px-3 py-2 rounded ${
-                currentPage === totalPages
-                  ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
-                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
-              }`}
-            >
-              ›
-            </button>
+            {visiblePages[visiblePages.length - 1] < totalPages && (
+              <>
+                <span className="px-2 text-gray-500">...</span>
+                <button
+                  onClick={() => setCurrentPage(totalPages)}
+                  className={`px-3 py-1 text-sm rounded ${
+                    currentPage === totalPages
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
+                  }`}
+                >
+                  {totalPages}
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
