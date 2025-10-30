@@ -4,18 +4,24 @@ import { motion, AnimatePresence } from "framer-motion";
 const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
   const [touchStartX, setTouchStartX] = useState(0);
 
+  // Swipe for mobile
   const handleSwipe = (e) => {
     const diff = touchStartX - e.changedTouches[0].clientX;
     if (diff > 50 && currentPage < totalPages) setCurrentPage((p) => p + 1);
     else if (diff < -50 && currentPage > 1) setCurrentPage((p) => p - 1);
   };
 
-  const renderPageButtons = () => {
+  // Render page buttons (desktop + mobile)
+  const renderPageButtons = (isMobile = false) => {
     const pages = [];
-    const visibleRange = 1; // one page before and after current page
+    const visibleRange = 1; // Show 1 page before and after current page
 
-    pages.push(1);
+    pages.push(1); // Always show first page
+
+    // Left dots
     if (currentPage - visibleRange > 2) pages.push("left-dots");
+
+    // Middle pages
     for (
       let i = Math.max(2, currentPage - visibleRange);
       i <= Math.min(totalPages - 1, currentPage + visibleRange);
@@ -23,7 +29,11 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
     ) {
       pages.push(i);
     }
+
+    // Right dots
     if (currentPage + visibleRange < totalPages - 1) pages.push("right-dots");
+
+    // Always show last page
     if (totalPages > 1) pages.push(totalPages);
 
     return pages.map((page, idx) => {
@@ -31,7 +41,9 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
         return (
           <span
             key={page + idx}
-            className="px-2 py-1 text-gray-500 select-none"
+            className={`text-gray-500 select-none ${
+              isMobile ? "text-xs" : "text-sm"
+            }`}
           >
             ...
           </span>
@@ -42,7 +54,9 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
         <button
           key={page}
           onClick={() => setCurrentPage(page)}
-          className={`px-3 py-1 text-sm rounded ${
+          className={`${
+            isMobile ? "px-1 py-1 text-xs" : "px-3 py-1 text-sm"
+          } rounded ${
             currentPage === page
               ? "bg-blue-600 text-white"
               : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
@@ -59,6 +73,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
       {/* Desktop Pagination */}
       {totalPages > 1 && (
         <div className="hidden md:flex justify-center items-center gap-2 mt-6">
+          {/* Prev Button */}
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
@@ -71,8 +86,10 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             ‹
           </button>
 
+          {/* Page Numbers */}
           <div className="flex gap-1">{renderPageButtons()}</div>
 
+          {/* Next Button */}
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => p + 1)}
@@ -99,7 +116,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => p - 1)}
-              className={`px-2 py-1 text-xs rounded ${
+              className={`px-1 py-1 text-xs rounded ${
                 currentPage === 1
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
                   : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
@@ -124,7 +141,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => p + 1)}
-              className={`px-2 py-1 text-xs rounded ${
+              className={`px-1 py-1 text-xs rounded ${
                 currentPage === totalPages
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
                   : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
@@ -134,12 +151,12 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             </button>
           </div>
 
-          {/* Number buttons smaller size */}
+          {/* Page Numbers for Mobile */}
           <div className="flex justify-center gap-1 items-center overflow-x-auto">
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => p - 1)}
-              className={`px-2 py-1 text-xs rounded ${
+              className={`px-1 py-1 text-xs rounded ${
                 currentPage === 1
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
                   : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
@@ -148,12 +165,12 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
               ‹
             </button>
 
-            {renderPageButtons()}
+            {renderPageButtons(true)}
 
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => p + 1)}
-              className={`px-2 py-1 text-xs rounded ${
+              className={`px-1 py-1 text-xs rounded ${
                 currentPage === totalPages
                   ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
                   : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
