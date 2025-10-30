@@ -78,7 +78,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
         </div>
       )}
 
-      {/* Mobile Pagination (same logic as desktop now) */}
+      {/* Mobile Pagination */}
       {totalPages > 1 && (
         <div
           className="md:hidden sticky bottom-0 bg-white z-10 flex flex-col gap-2 px-2 py-2 select-none"
@@ -125,9 +125,33 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             </button>
           </div>
 
-          {/* Number buttons - same pattern as desktop */}
+          {/* Number Buttons with Arrows */}
           <div className="flex justify-center gap-1 overflow-x-auto">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => p - 1)}
+              className={`px-3 py-2 rounded ${
+                currentPage === 1
+                  ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
+                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
+              }`}
+            >
+              ‹
+            </button>
+
             {renderPageButtons()}
+
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => p + 1)}
+              className={`px-3 py-2 rounded ${
+                currentPage === totalPages
+                  ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
+                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
+              }`}
+            >
+              ›
+            </button>
           </div>
         </div>
       )}
