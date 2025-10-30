@@ -10,24 +10,27 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
     else if (diff < -50 && currentPage > 1) setCurrentPage((p) => p - 1);
   };
 
-  // ✅ Static pagination logic (no shifting)
-  const renderStaticButtons = () => {
+  // ✅ Smart windowed pagination (shows only 4 page numbers)
+  const renderPageButtons = () => {
     const pages = [];
+    const maxVisible = 4;
 
-    // Always show first 3 pages
-    for (let i = 1; i <= Math.min(3, totalPages); i++) {
-      pages.push(i);
+    let start = Math.max(1, currentPage - 1);
+    let end = start + maxVisible - 1;
+
+    if (end > totalPages) {
+      end = totalPages;
+      start = Math.max(1, end - maxVisible + 1);
     }
 
-    // Add ellipsis if total pages > 5
-    if (totalPages > 5) {
-      pages.push("...");
-      pages.push(totalPages);
-    } else if (totalPages > 3) {
-      for (let i = 4; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    }
+    // Always include first and last if far apart
+    if (start > 1) pages.push(1);
+    if (start > 2) pages.push("...");
+
+    for (let i = start; i <= end; i++) pages.push(i);
+
+    if (end < totalPages - 1) pages.push("...");
+    if (end < totalPages) pages.push(totalPages);
 
     return pages.map((page, index) => {
       if (page === "...") {
@@ -74,7 +77,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             ‹
           </button>
 
-          <div className="flex gap-1">{renderStaticButtons()}</div>
+          <div className="flex gap-1">{renderPageButtons()}</div>
 
           <button
             disabled={currentPage === totalPages}
@@ -151,7 +154,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
               ‹
             </button>
 
-            {renderStaticButtons()}
+            {renderPageButtons()}
 
             <button
               disabled={currentPage === totalPages}
