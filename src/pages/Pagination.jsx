@@ -10,6 +10,41 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
     else if (diff < -50 && currentPage > 1) setCurrentPage((p) => p - 1);
   };
 
+  const renderPageButtons = () => {
+    return Array.from({ length: totalPages }, (_, i) => i + 1)
+      .filter(
+        (page) =>
+          page === 1 ||
+          page === totalPages ||
+          (page >= currentPage - 2 && page <= currentPage + 2)
+      )
+      .map((page, idx, arr) => {
+        const prevPage = arr[idx - 1];
+        if (prevPage && page - prevPage > 1)
+          return (
+            <span
+              key={`dots-${page}`}
+              className="px-2 py-1 text-gray-500 select-none"
+            >
+              ...
+            </span>
+          );
+        return (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`px-3 py-1 text-sm rounded ${
+              currentPage === page
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
+            }`}
+          >
+            {page}
+          </button>
+        );
+      });
+  };
+
   return (
     <>
       {/* Desktop Pagination */}
@@ -27,40 +62,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             ‹
           </button>
 
-          <div className="flex gap-1">
-            {Array.from({ length: totalPages }, (_, i) => i + 1)
-              .filter(
-                (page) =>
-                  page === 1 ||
-                  page === totalPages ||
-                  (page >= currentPage - 2 && page <= currentPage + 2)
-              )
-              .map((page, idx, arr) => {
-                const prevPage = arr[idx - 1];
-                if (prevPage && page - prevPage > 1)
-                  return (
-                    <span
-                      key={`dots-${page}`}
-                      className="px-2 py-1 text-gray-500 select-none"
-                    >
-                      ...
-                    </span>
-                  );
-                return (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-3 py-1 text-sm rounded ${
-                      currentPage === page
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
-                    }`}
-                  >
-                    {page}
-                  </button>
-                );
-              })}
-          </div>
+          <div className="flex gap-1">{renderPageButtons()}</div>
 
           <button
             disabled={currentPage === totalPages}
@@ -76,7 +78,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
         </div>
       )}
 
-      {/* Mobile Pagination */}
+      {/* Mobile Pagination (same logic as desktop now) */}
       {totalPages > 1 && (
         <div
           className="md:hidden sticky bottom-0 bg-white z-10 flex flex-col gap-2 px-2 py-2 select-none"
@@ -123,43 +125,9 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
             </button>
           </div>
 
-          {/* Number buttons */}
+          {/* Number buttons - same pattern as desktop */}
           <div className="flex justify-center gap-1 overflow-x-auto">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((p) => p - 1)}
-              className={`px-3 py-2 rounded ${
-                currentPage === 1
-                  ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
-                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
-              }`}
-            >
-              ‹
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={`px-3 py-1 text-sm rounded whitespace-nowrap ${
-                  currentPage === page
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((p) => p + 1)}
-              className={`px-3 py-2 rounded ${
-                currentPage === totalPages
-                  ? "bg-gray-200 opacity-50 cursor-not-allowed dark:bg-gray-100 dark:text-gray-900"
-                  : "bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-100 dark:text-gray-900"
-              }`}
-            >
-              ›
-            </button>
+            {renderPageButtons()}
           </div>
         </div>
       )}
