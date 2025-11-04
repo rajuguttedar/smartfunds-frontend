@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { toast } from "react-hot-toast";
 
 function ForgotPassword() {

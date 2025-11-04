@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { Toaster, toast } from "react-hot-toast";
-import { useAuth } from "../context/AuthContext";
-import CustomerDetailsForCustomerRecord from "./CustomerDetailsForCustomerRecord";
+import { useAuth } from "../../context/AuthContext";
+import CustomerDetailsForCustomerRecord from "../customers/CustomerDetailsForCustomerRecord";
 import AddCustomerRecord from "./AddCustomerRecord";
-import Pagination from "./Pagination";
+import Pagination from "../Pagination";
 import { FaTimes } from "react-icons/fa";
-import ConfirmModal from "./ConfirmModal";
+import ConfirmModal from "../dashboard/ConfirmModal";
 
 export default function CustomerRecordsList() {
   const { customerId } = useParams();

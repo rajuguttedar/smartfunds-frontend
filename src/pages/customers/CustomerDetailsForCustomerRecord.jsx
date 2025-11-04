@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import AddCustomer from "./AddCustomer";
 import { toast } from "react-hot-toast";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function CustomerDetailsForCustomerRecord({ customer }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);

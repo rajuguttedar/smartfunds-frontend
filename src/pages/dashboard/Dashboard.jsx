@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from "react";
 
-import api from "../api/axios";
-import { useAuth } from "../context/AuthContext";
+import api from "../../api/axios";
+import { useAuth } from "../../context/AuthContext";
 import Chart from "./Chart";
 
 export default function Dashboard() {

@@ -1,11 +1,11 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { Toaster, toast } from "react-hot-toast";
-import { useAuth } from "../context/AuthContext";
-import Pagination from "./Pagination";
-import ConfirmModal from "./ConfirmModal";
+import { useAuth } from "../../context/AuthContext";
+import Pagination from "../Pagination";
+import ConfirmModal from "../dashboard/ConfirmModal";
 
 export default function CompletedAccounts() {
   const { user } = useAuth();

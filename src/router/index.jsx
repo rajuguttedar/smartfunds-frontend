@@ -9,20 +9,20 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import Spinner from "../components/Spinner";
 
 // Eager-loaded small pages
-import Login from "../pages/Login";
-import ForgotPassword from "../pages/ForgotPassword";
-import ResetPassword from "../pages/ResetPassword";
-import CompletedAccounts from "../pages/CompletedAccounts";
-import Find100ThDay from "../pages/Find100ThDay";
-import AgeCalculator from "../pages/AgeCalculator";
+import Login from "../pages/adminEditors/Login";
+import ForgotPassword from "../pages/adminEditors/ForgotPassword";
+import ResetPassword from "../pages/adminEditors/ResetPassword";
+import CompletedAccounts from "../pages/completedCustomers/CompletedAccounts";
+import Find100ThDay from "../pages/dashboard/Find100ThDay";
+import AgeCalculator from "../pages/dashboard/AgeCalculator";
 
 // Lazy-loaded bigger pages
-const Dashboard = lazy(() => import("../pages/Dashboard"));
-const CustomerList = lazy(() => import("../pages/CustomerList"));
-const CustomerRecordsList = lazy(() => import("../pages/CustomerRecordsList"));
-const AddCustomer = lazy(() => import("../pages/AddCustomer"));
-const AddEditor = lazy(() => import("../pages/AddEditor"));
-const EditorsList = lazy(() => import("../pages/EditorsList"));
+const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
+const CustomerList = lazy(() => import("../pages/customers/CustomerList"));
+const CustomerRecordsList = lazy(() => import("../pages/customersRecords/CustomerRecordsList"));
+const AddCustomer = lazy(() => import("../pages/customers/AddCustomer"));
+const AddEditor = lazy(() => import("../pages/editors/AddEditor"));
+const EditorsList = lazy(() => import("../pages/editors/EditorsList"));
 
 const router = createBrowserRouter([
   {

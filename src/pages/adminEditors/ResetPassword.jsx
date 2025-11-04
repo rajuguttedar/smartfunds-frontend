@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { toast } from "react-hot-toast";
 
 function ResetPassword() {

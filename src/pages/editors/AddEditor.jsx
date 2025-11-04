@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { Toaster, toast } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 

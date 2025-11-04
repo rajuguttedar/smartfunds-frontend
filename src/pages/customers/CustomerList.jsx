@@ -1,13 +1,13 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { Toaster, toast } from "react-hot-toast";
-import Pagination from "./Pagination";
+import Pagination from "../Pagination";
 import AddCustomer from "./AddCustomer";
-import Find100ThDay from "./Find100ThDay";
-import { useAuth } from "../context/AuthContext";
-import ConfirmModal from "./ConfirmModal";
+import Find100ThDay from "../dashboard/Find100ThDay";
+import { useAuth } from "../../context/AuthContext";
+import ConfirmModal from "../dashboard/ConfirmModal";
 
 export default function CustomerList() {
   const [customers, setCustomers] = useState([]);
@@ -72,7 +72,8 @@ export default function CustomerList() {
 
   // Search filtering applied before pagination
   const filteredCustomersAll = customers.filter((cust) =>
-    cust.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    cust.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    cust.accountNo?.toString().toLowerCase().includes(searchTerm.toLowerCase())
   );
 
 

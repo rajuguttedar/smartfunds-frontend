@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { Toaster, toast } from "react-hot-toast";
-import ConfirmModal from "./ConfirmModal";
+import ConfirmModal from "../dashboard/ConfirmModal";
 import AddEditor from "./AddEditor";
 import { FaTimes } from "react-icons/fa";
 
