@@ -73,7 +73,8 @@ export default function CustomerList() {
   // Search filtering applied before pagination
   const filteredCustomersAll = customers.filter((cust) =>
     cust.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    cust.accountNo?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    cust.accountNo?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+    cust.mobile?.toString().toLowerCase().includes(searchTerm.toLowerCase())
   );
 
 

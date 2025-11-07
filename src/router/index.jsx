@@ -113,7 +113,7 @@ const router = createBrowserRouter([
       {
         path: "completed-accounts",
         element: (
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["admin", "editor"]}>
             <CompletedAccounts />
           </ProtectedRoute>
         ),

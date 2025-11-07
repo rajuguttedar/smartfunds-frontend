@@ -68,7 +68,8 @@ export default function CompletedAccounts() {
   const currentCustomers = completedCustomers.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(completedCustomers.length / customersPerPage);
 
-  if (!user || user.role !== "admin") return <p>Access denied.</p>;
+  if (!user) return <p>Access denied.</p>;
+  console.log("userDetails : ", user)
 
   return (
     <div className="flex-1 w-full flex flex-col font-suse-mono items-start justify-center bg-gray-100 dark:bg-gray-900 p-4 min-h-0">
@@ -77,7 +78,7 @@ export default function CompletedAccounts() {
       {/* Confirm Delete Modal */}
       <ConfirmModal
         open={modalOpen}
-        message={`Are you sure you want to delete ${selectedEditor?.name}? and ${selectedEditor?.name}'s all records will also be deleted`}
+        message={`Are you sure you want to delete ${selectedEditor?.name}?'s all records will also be deleted`}
         onCancel={() => setModalOpen(false)}
         onConfirm={() => handleDelete(selectedEditor._id)}
       />
@@ -119,9 +120,9 @@ export default function CompletedAccounts() {
                     <th className="px-4 py-3 text-start whitespace-nowrap">
                       Pending
                     </th>
-                    <th className="px-4 py-3 text-start whitespace-nowrap">
+                  {user?.role == "admin" && ( <th className="px-4 py-3 text-start whitespace-nowrap">
                       Actions
-                    </th>
+                    </th>)}
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -153,18 +154,18 @@ export default function CompletedAccounts() {
                         className="px-4 py-2 flex gap-2 whitespace-nowrap"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <button
+                        {user?.role == "admin" && (<button
                           disabled
                           className="bg-blue-400 text-white px-3 py-1 rounded cursor-not-allowed"
                         >
                           Edit
-                        </button>
-                        <button
+                        </button>)}
+                        {user?.role == "admin" && (<button
                           onClick={() => handleOpenModal(cust)}
                           className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
                         >
                           Delete
-                        </button>
+                        </button>)}
                       </td>
                     </tr>
                   ))}

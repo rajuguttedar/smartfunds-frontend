@@ -56,8 +56,8 @@ export default function SideNavBar({ dark, setDark, onNavigate }) {
       path: "/customers",
       icon: <FaUserFriends />,
     },
-    // ✅ Admin only: Completed Accounts
-    user?.role === "admin" && {
+    // ✅ Admin and editor only: Completed Accounts
+    (user?.role === "admin" || user?.role === "editor") && {
       name: "Completed Accounts",
       path: "/completed-accounts",
       icon: <FaCheckCircle />,
